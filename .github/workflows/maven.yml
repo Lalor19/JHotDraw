@@ -16,19 +16,21 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 23
+    - name: Set up JDK 23 with GitHub Packages auth
       uses: actions/setup-java@v4
       with:
         java-version: '23'
         distribution: 'temurin'
         cache: maven
+        server-id: github
+        server-username: ${{ github.actor }}
+        server-password: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -U -B package --file pom.xml
 
     - name: Deploy to Github Package Registry
       env:
@@ -44,12 +46,15 @@ jobs:
     needs: [build]   # ensure build job finishes first
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 1.8
+      - name: Set up JDK 1.8 with GitHub Packages auth
         uses: actions/setup-java@v4
         with:
           java-version: '8'
           distribution: 'temurin'
           cache: maven
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -57,7 +62,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Publish to GitHub Packages
-        run: mvn deploy
+        run: mvn -U deploy
         env:
           GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -67,12 +72,16 @@ jobs:
     needs: [build]
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 23
+      - name: Set up JDK 23 with GitHub Packages auth
         uses: actions/setup-java@v4
         with:
           java-version: '23'
           distribution: 'temurin'
           cache: maven
+          server-id: github
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run tests 
         run: mvn test
         working-directory: ./jhotdraw-core
