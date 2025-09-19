@@ -17,7 +17,7 @@
 	</distributionManagement>
 	<repositories>
 		<repository>
-			<id>github</id>
+			<id>github-sweat-tek</id>
 			<name>GitHub external Packages</name>
 			<url>https://maven.pkg.github.com/sweat-tek/MavenRepository</url>
 		</repository>
