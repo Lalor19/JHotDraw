@@ -277,7 +277,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
             gatheredTransforms(tx);
             return;
         }
-        translation(tx);
+        translationFillStroke(tx);
     }
 
     private void gatheredTransforms(AffineTransform tx) {
@@ -290,7 +290,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         }
     }
 
-    private void translation(AffineTransform tx) {
+    private void translationFillStroke(AffineTransform tx) {
         Point2D.Double anchor = getStartPoint();
         Point2D.Double lead = getEndPoint();
         setBounds(
