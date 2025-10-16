@@ -272,34 +272,43 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     public void transform(AffineTransform tx) {
         invalidateTransformedShape();
-        if (get(TRANSFORM) != null
-                || //              (tx.getType() & (AffineTransform.TYPE_TRANSLATION | AffineTransform.TYPE_MASK_SCALE)) != tx.getType()) {
-                (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
-            if (get(TRANSFORM) == null) {
-                set(TRANSFORM, (AffineTransform) tx.clone());
-            } else {
-                AffineTransform t = TRANSFORM.getClone(this);
-                t.preConcatenate(tx);
-                set(TRANSFORM, t);
-            }
+
+        if (get(TRANSFORM) != null || (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
+            gatheredTransforms(tx);
+            return;
+        }
+        translation(tx);
+    }
+
+    private void gatheredTransforms(AffineTransform tx) {
+        AffineTransform current = TRANSFORM.getClone(this);
+        if (current == null) {
+            set(TRANSFORM, new AffineTransform(tx));
         } else {
-            Point2D.Double anchor = getStartPoint();
-            Point2D.Double lead = getEndPoint();
-            setBounds(
-                    (Point2D.Double) tx.transform(anchor, anchor),
-                    (Point2D.Double) tx.transform(lead, lead));
-            if (get(FILL_GRADIENT) != null
-                    && !get(FILL_GRADIENT).isRelativeToFigureBounds()) {
-                Gradient g = FILL_GRADIENT.getClone(this);
-                g.transform(tx);
-                set(FILL_GRADIENT, g);
-            }
-            if (get(STROKE_GRADIENT) != null
-                    && !get(STROKE_GRADIENT).isRelativeToFigureBounds()) {
-                Gradient g = STROKE_GRADIENT.getClone(this);
-                g.transform(tx);
-                set(STROKE_GRADIENT, g);
-            }
+            current.preConcatenate(tx);
+            set(TRANSFORM, current);
+        }
+    }
+
+    private void translation(AffineTransform tx) {
+        Point2D.Double anchor = getStartPoint();
+        Point2D.Double lead = getEndPoint();
+        setBounds(
+                (Point2D.Double) tx.transform(anchor, anchor),
+                (Point2D.Double) tx.transform(lead, lead));
+
+        Gradient fillGradient = get(FILL_GRADIENT);
+        if (fillGradient != null && !fillGradient.isRelativeToFigureBounds()) {
+            Gradient gClone = FILL_GRADIENT.getClone(this);
+            gClone.transform(tx);
+            set(FILL_GRADIENT, gClone);
+        }
+
+        Gradient strokeGradient = get(STROKE_GRADIENT);
+        if(strokeGradient != null && !strokeGradient.isRelativeToFigureBounds()) {
+            Gradient clone = STROKE_GRADIENT.getClone(this);
+            strokeGradient.transform(tx);
+            set(STROKE_GRADIENT, clone);
         }
     }
 
@@ -316,10 +325,10 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     public Object getTransformRestoreData() {
         return new Object[]{
-            roundrect.clone(),
-            TRANSFORM.getClone(this),
-            FILL_GRADIENT.getClone(this),
-            STROKE_GRADIENT.getClone(this)};
+                roundrect.clone(),
+                TRANSFORM.getClone(this),
+                FILL_GRADIENT.getClone(this),
+                STROKE_GRADIENT.getClone(this)};
     }
 
     // EDITING
