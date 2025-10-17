@@ -64,8 +64,8 @@ jobs:
       - name: Publish to GitHub Packages
         run: mvn -U deploy
         env:
-          GITHUB_USERNAME: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ github.actor }}
  
   testing:
     runs-on: ubuntu-latest
