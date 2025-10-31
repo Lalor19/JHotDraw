@@ -10,6 +10,8 @@ package org.jhotdraw.samples.svg.figures;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
+
+import org.apache.bcel.generic.ARETURN;
 import org.jhotdraw.draw.*;
 import static org.jhotdraw.draw.AttributeKeys.FILL_COLOR;
 import static org.jhotdraw.draw.AttributeKeys.STROKE_CAP;
@@ -69,12 +71,28 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
      */
     private transient Shape cachedHitShape;
 
+    public record Rect(double x, double y, double width, double height){}
+    public record RoundRect(double rx, double ry){}
+
     /**
      * Creates a new instance.
      */
     public SVGRectFigure() {
-        this(0, 0, 0, 0);
+        new Rect(0, 0, 0, 0);
     }
+
+    public SVGRectFigure(Rect rect){
+        this(rect, new RoundRect(0, 0));
+    }
+
+    public SVGRectFigure(Rect rect, RoundRect rRect) {
+        roundrect = new RoundRectangle2D.Double(rect.x(), rect.y(), rect.width(), rect.height(), rRect.rx(), rRect.ry());
+        SVGAttributeKeys.setDefaults(this);
+        setConnectable(false);
+    }
+
+
+
 
     public SVGRectFigure(double x, double y, double width, double height) {
         this(x, y, width, height, 0, 0);
@@ -85,6 +103,8 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         SVGAttributeKeys.setDefaults(this);
         setConnectable(false);
     }
+
+
 
     // DRAWING
     @Override
