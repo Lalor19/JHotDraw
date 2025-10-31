@@ -91,7 +91,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         setConnectable(false);
     }
 
-    /*
+
 
 
     public SVGRectFigure(double x, double y, double width, double height) {
@@ -103,7 +103,8 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         SVGAttributeKeys.setDefaults(this);
         setConnectable(false);
     }
-     */
+
+
 
     // DRAWING
     @Override
