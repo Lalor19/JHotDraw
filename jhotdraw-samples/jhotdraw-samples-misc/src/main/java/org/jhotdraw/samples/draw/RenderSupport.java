@@ -1,0 +1,63 @@
+package org.jhotdraw.samples.draw;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
+
+public final class RenderSupport {
+
+    private RenderSupport() {
+    }
+
+    public static void draw(Graphics2D g, double opacity, Supplier<Rectangle2D.Double> drawingArea, Consumer<Graphics2D> painter) {
+        //Creating newOpacity variable to avoid overriding the original opacity value, but keeping it intact
+        double newOpacity = Math.min(Math.max(0d, opacity), 1d);
+        if (newOpacity == 0d) return;
+
+        if (newOpacity < 1d) {
+            //cloning the drawingArea variable to, avoid mutating the original rectangle object.
+            Rectangle2D.Double area = (Rectangle2D.Double) drawingArea.get().clone();
+            Rectangle2D clipBounds = g.getClipBounds();
+            if (clipBounds != null) {
+                Rectangle2D.intersect(area, clipBounds, area);
+            }
+            if (!area.isEmpty()) {
+                //refactoring the code into variable for readability
+                final AffineTransform at = g.getTransform();
+                final double sx = at.getScaleX();
+                final double sy = at.getScaleY();
+                final int width = Math.max(1, (int) ((2 + area.width) * sx));
+                final int height = Math.max(1, (int) ((2 + area.height) * sy ));
+
+                BufferedImage buf = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+                Graphics2D gr = buf.createGraphics();
+                gr.scale(sx, sy);
+                gr.translate((int) -area.x, (int) -area.y);
+                gr.setRenderingHints(g.getRenderingHints());
+                painter.accept(gr); //Using the method from the consumer interface
+                gr.dispose();
+                Composite savedComposite = g.getComposite();
+                g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) newOpacity));
+                g.drawImage(buf, (int) area.x, (int) area.y,
+                        2 + (int) area.width, 2 + (int) area.height, null);
+                g.setComposite(savedComposite);
+            }
+        } else {
+            painter.accept(g);//Using the method from the consumer interface
+        }
+
+    }
+
+
+    /**
+     * This method is invoked before the rendered image of the figure is
+     * composited.
+     */
+
+}
+
+
