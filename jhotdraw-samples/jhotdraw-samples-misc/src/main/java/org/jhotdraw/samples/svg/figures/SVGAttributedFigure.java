@@ -17,7 +17,7 @@ import org.jhotdraw.draw.*;
 import static org.jhotdraw.draw.AttributeKeys.STROKE_WIDTH;
 import static org.jhotdraw.draw.AttributeKeys.TRANSFORM;
 
-import org.jhotdraw.samples.draw.RenderSupport;
+import org.jhotdraw.samples.utility.RenderSupport;
 import org.jhotdraw.samples.svg.SVGAttributeKeys;
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 import org.jhotdraw.util.*;

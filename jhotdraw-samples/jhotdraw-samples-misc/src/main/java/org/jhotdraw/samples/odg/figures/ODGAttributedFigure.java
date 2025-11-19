@@ -18,7 +18,7 @@ import static org.jhotdraw.draw.AttributeKeys.TRANSFORM;
 import org.jhotdraw.samples.odg.ODGAttributeKeys;
 import static org.jhotdraw.samples.odg.ODGAttributeKeys.*;
 import org.jhotdraw.samples.odg.ODGConstants;
-import org.jhotdraw.samples.draw.RenderSupport;
+import org.jhotdraw.samples.utility.RenderSupport;
 import org.jhotdraw.util.*;
 
 /**

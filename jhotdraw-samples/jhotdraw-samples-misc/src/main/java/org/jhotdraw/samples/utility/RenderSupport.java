@@ -1,4 +1,4 @@
-package org.jhotdraw.samples.draw;
+package org.jhotdraw.samples.utility;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
