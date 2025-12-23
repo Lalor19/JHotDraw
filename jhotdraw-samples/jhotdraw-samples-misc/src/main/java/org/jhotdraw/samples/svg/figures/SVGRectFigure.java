@@ -77,33 +77,19 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     /**
      * Creates a new instance.
      */
-    public SVGRectFigure() {
+    protected SVGRectFigure() {
         this(0, 0, 0, 0);
     }
 
-    public SVGRectFigure(Rect rect){
-        this(rect, new RoundRect(0, 0));
-    }
-
-    public SVGRectFigure(Rect rect, RoundRect rRect) {
-        roundrect = new RoundRectangle2D.Double(rect.x(), rect.y(), rect.width(), rect.height(), rRect.rx(), rRect.ry());
-        SVGAttributeKeys.setDefaults(this);
-        setConnectable(false);
-    }
-
-
-
-
-    public SVGRectFigure(double x, double y, double width, double height) {
+    protected SVGRectFigure(double x, double y, double width, double height) {
         this(x, y, width, height, 0, 0);
     }
 
-    public SVGRectFigure(double x, double y, double width, double height, double rx, double ry) {
+    protected SVGRectFigure(double x, double y, double width, double height, double rx, double ry) {
         roundrect = new RoundRectangle2D.Double(x, y, width, height, rx, ry);
         SVGAttributeKeys.setDefaults(this);
         setConnectable(false);
     }
-
 
 
     // DRAWING

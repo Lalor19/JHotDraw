@@ -622,7 +622,7 @@ public class SVGInputFormat implements InputFormat {
         }
         double rx = toNumber(elem, rxValue.equals("none") ? "0" : rxValue);
         double ry = toNumber(elem, ryValue.equals("none") ? "0" : ryValue);
-        Figure figure = factory.createRect(x, y, w, h, rx, ry, a);
+        Figure figure = factory.createRect(x, y, w, h, a);
         elementObjects.put(elem, figure);
         return figure;
     }
