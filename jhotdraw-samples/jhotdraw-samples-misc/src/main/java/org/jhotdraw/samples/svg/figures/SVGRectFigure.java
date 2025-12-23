@@ -78,7 +78,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
      * Creates a new instance.
      */
     public SVGRectFigure() {
-        new Rect(0, 0, 0, 0);
+        this(0, 0, 0, 0);
     }
 
     public SVGRectFigure(Rect rect){
