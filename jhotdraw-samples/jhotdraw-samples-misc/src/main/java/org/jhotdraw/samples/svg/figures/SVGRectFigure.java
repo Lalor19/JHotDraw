@@ -81,19 +81,6 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         this(0, 0, 0, 0);
     }
 
-    public SVGRectFigure(Rect rect){
-        this(rect, new RoundRect(0, 0));
-    }
-
-    public SVGRectFigure(Rect rect, RoundRect rRect) {
-        roundrect = new RoundRectangle2D.Double(rect.x(), rect.y(), rect.width(), rect.height(), rRect.rx(), rRect.ry());
-        SVGAttributeKeys.setDefaults(this);
-        setConnectable(false);
-    }
-
-
-
-
     public SVGRectFigure(double x, double y, double width, double height) {
         this(x, y, width, height, 0, 0);
     }
@@ -103,7 +90,6 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         SVGAttributeKeys.setDefaults(this);
         setConnectable(false);
     }
-
 
 
     // DRAWING
