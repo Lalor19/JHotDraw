@@ -19,14 +19,7 @@ import org.jhotdraw.geom.BezierPath;
 import org.jhotdraw.samples.svg.Gradient;
 import org.jhotdraw.samples.svg.LinearGradient;
 import org.jhotdraw.samples.svg.RadialGradient;
-import org.jhotdraw.samples.svg.figures.SVGBezierFigure;
-import org.jhotdraw.samples.svg.figures.SVGEllipseFigure;
-import org.jhotdraw.samples.svg.figures.SVGGroupFigure;
-import org.jhotdraw.samples.svg.figures.SVGImageFigure;
-import org.jhotdraw.samples.svg.figures.SVGPathFigure;
-import org.jhotdraw.samples.svg.figures.SVGRectFigure;
-import org.jhotdraw.samples.svg.figures.SVGTextAreaFigure;
-import org.jhotdraw.samples.svg.figures.SVGTextFigure;
+import org.jhotdraw.samples.svg.figures.*;
 
 /**
  * DefaultSVGFigureFactory.
@@ -43,17 +36,19 @@ public class DefaultSVGFigureFactory implements SVGFigureFactory {
     }
 
     @Override
-    public Figure createRect(double x, double y, double w, double h, double rx, double ry, Map<AttributeKey<?>, Object> a) {
-        SVGRectFigure figure = createRectFactory();
+    public Figure createRect(double x, double y, double w, double h, Map<AttributeKey<?>, Object> a) {
+        SVGAttributedFigure figure = createRectFactory();
         figure.setBounds(new Point2D.Double(x, y), new Point2D.Double(x + w, y + h));
-        figure.setArc(rx, ry);
+        //figure.setArc(rx, ry);
         figure.setAttributes(a);
         return figure;
     }
 
-    public static SVGRectFigure createRectFactory() {
+
+    public static SVGAttributedFigure createRectFactory() {
         return new SVGRectFigure();
     }
+
 
     @Override
     public Figure createCircle(double cx, double cy, double r, Map<AttributeKey<?>, Object> a) {

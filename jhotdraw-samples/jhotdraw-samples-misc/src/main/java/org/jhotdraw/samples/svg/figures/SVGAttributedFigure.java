@@ -38,6 +38,7 @@ public abstract class SVGAttributedFigure extends AbstractAttributedFigure {
     public SVGAttributedFigure() {
     }
 
+
     @Override
     public void draw(Graphics2D g) {
         double opacity = get(OPACITY);
