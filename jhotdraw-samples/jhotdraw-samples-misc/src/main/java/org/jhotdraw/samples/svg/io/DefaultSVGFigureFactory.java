@@ -37,18 +37,11 @@ public class DefaultSVGFigureFactory implements SVGFigureFactory {
 
     @Override
     public Figure createRect(double x, double y, double w, double h, Map<AttributeKey<?>, Object> a) {
-        SVGAttributedFigure figure = createRectFactory();
+        SVGAttributedFigure figure = SVGAttributedFigure.createRectFactory();
         figure.setBounds(new Point2D.Double(x, y), new Point2D.Double(x + w, y + h));
-        //figure.setArc(rx, ry);
         figure.setAttributes(a);
         return figure;
     }
-
-
-    public static SVGAttributedFigure createRectFactory() {
-        return new SVGRectFigure();
-    }
-
 
     @Override
     public Figure createCircle(double cx, double cy, double r, Map<AttributeKey<?>, Object> a) {
