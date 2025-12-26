@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
-import org.apache.bcel.generic.ARETURN;
 import org.jhotdraw.draw.*;
 import static org.jhotdraw.draw.AttributeKeys.FILL_COLOR;
 import static org.jhotdraw.draw.AttributeKeys.STROKE_CAP;
@@ -26,6 +25,7 @@ import org.jhotdraw.geom.Geom;
 import org.jhotdraw.geom.GrowStroke;
 import org.jhotdraw.samples.svg.Gradient;
 import org.jhotdraw.samples.svg.SVGAttributeKeys;
+
 import static org.jhotdraw.samples.svg.SVGAttributeKeys.*;
 
 /**
@@ -91,6 +91,9 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         setConnectable(false);
     }
 
+    private RectStrategy rectStrategy(){
+        return (roundrect.arcwidth == 0d || roundrect.archeight == 0d)
+    }
 
     // DRAWING
     @Override
