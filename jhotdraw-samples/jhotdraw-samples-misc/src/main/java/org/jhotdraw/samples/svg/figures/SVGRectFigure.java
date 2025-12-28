@@ -221,6 +221,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
             if (get(TRANSFORM) != null) {
                 cachedTransformedShape = get(TRANSFORM).createTransformedShape(cachedTransformedShape);
             }
+            cachedTransformedShape = shape;
         }
         return cachedTransformedShape;
     }

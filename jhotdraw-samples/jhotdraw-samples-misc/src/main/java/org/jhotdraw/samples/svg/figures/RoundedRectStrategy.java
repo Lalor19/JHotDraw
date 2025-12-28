@@ -1,5 +1,7 @@
 package org.jhotdraw.samples.svg.figures;
 
+import org.jhotdraw.samples.svg.gui.ProgressIndicator;
+
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
