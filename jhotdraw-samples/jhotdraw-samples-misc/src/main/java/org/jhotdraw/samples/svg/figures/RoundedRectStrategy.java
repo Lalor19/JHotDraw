@@ -7,7 +7,9 @@ import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 
 public class RoundedRectStrategy implements RectStrategy {
-    public RoundedRectStrategy() {
+    public static final RoundedRectStrategy INSTANCE = new RoundedRectStrategy();
+
+    private RoundedRectStrategy() {
     }
 
     @Override

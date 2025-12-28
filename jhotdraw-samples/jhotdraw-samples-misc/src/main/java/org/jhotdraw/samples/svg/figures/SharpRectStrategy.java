@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
 public class SharpRectStrategy implements RectStrategy {
-    public SharpRectStrategy() {
+    public static final SharpRectStrategy INSTANCE = new SharpRectStrategy();
+
+    private SharpRectStrategy() {
     }
 
     @Override

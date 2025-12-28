@@ -91,21 +91,21 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         setConnectable(false);
     }
 
-    private RectStrategy rectStrategy(){
+    private RectStrategy selectRectStrategy(){
         return (roundrect.arcwidth == 0d || roundrect.archeight == 0d)
-                ? new SharpRectStrategy()
-                : new RoundedRectStrategy();
+                ? SharpRectStrategy.INSTANCE
+                : RoundedRectStrategy.INSTANCE;
     }
 
     // DRAWING
     @Override
     protected void drawFill(Graphics2D g) {
-        g.fill(rectStrategy().fillShape(roundrect));
+        g.fill(selectRectStrategy().fillShape(roundrect));
     }
 
     @Override
     protected void drawStroke(Graphics2D g) {
-        g.draw(rectStrategy().strokeShape(roundrect, ACV));
+        g.draw(selectRectStrategy().strokeShape(roundrect, ACV));
     }
 
     // SHAPE AND BOUNDS
@@ -217,7 +217,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
 
     private Shape getTransformedShape() {
         if (cachedTransformedShape == null) {
-            Shape shape = rectStrategy().transformShape(roundrect);
+            Shape shape = selectRectStrategy().transformShape(roundrect);
             if (get(TRANSFORM) != null) {
                 cachedTransformedShape = get(TRANSFORM).createTransformedShape(cachedTransformedShape);
             }
