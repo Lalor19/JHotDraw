@@ -6,11 +6,8 @@ import java.awt.*;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 
-public class RoundedRectStrategy implements RectStrategy {
-    public static final RoundedRectStrategy INSTANCE = new RoundedRectStrategy();
-
-    private RoundedRectStrategy() {
-    }
+public enum RoundedRectStrategy implements RectStrategy {
+    INSTANCE;
 
     @Override
     public Shape fillShape(RoundRectangle2D.Double roundRect) {

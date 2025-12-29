@@ -3,11 +3,8 @@ package org.jhotdraw.samples.svg.figures;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 
-public class SharpRectStrategy implements RectStrategy {
-    public static final SharpRectStrategy INSTANCE = new SharpRectStrategy();
-
-    private SharpRectStrategy() {
-    }
+public enum SharpRectStrategy implements RectStrategy {
+    INSTANCE;
 
     @Override
     public Shape fillShape(RoundRectangle2D.Double roundRect) {
