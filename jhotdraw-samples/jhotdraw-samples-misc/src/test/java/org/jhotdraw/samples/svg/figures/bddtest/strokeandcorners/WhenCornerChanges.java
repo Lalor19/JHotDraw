@@ -1,10 +1,9 @@
-package org.jhotdraw.samples.svg.figures.bddtest;
+package org.jhotdraw.samples.svg.figures.bddtest.strokeandcorners;
 
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
 import org.jhotdraw.samples.svg.figures.RoundedRectStrategy;
-import org.jhotdraw.samples.svg.figures.SharpRectStrategy;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;

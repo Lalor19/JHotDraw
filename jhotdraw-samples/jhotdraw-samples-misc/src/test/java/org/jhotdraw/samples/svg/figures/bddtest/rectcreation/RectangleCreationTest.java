@@ -1,4 +1,4 @@
-package org.jhotdraw.samples.svg.figures.bddtest;
+package org.jhotdraw.samples.svg.figures.bddtest.rectcreation;
 
 import com.tngtech.jgiven.junit.ScenarioTest;
 import org.junit.Test;
