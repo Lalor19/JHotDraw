@@ -1,0 +1,120 @@
+{
+  "className": "org.jhotdraw.samples.svg.figures.bddtest.RectangleCoreFeatureTest",
+  "name": "Rectangle Core Feature",
+  "scenarios": [
+    {
+      "className": "org.jhotdraw.samples.svg.figures.bddtest.RectangleCoreFeatureTest",
+      "testMethodName": "create_rectangles",
+      "description": "create rectangles",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "an svg figure factory is available",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "an svg figure factory is available"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 1832875,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "creating a rectangle with bounds",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "creating a rectangle with bounds"
+                },
+                {
+                  "value": "10.0",
+                  "argumentInfo": {
+                    "argumentName": "x",
+                    "formattedValue": "10.0"
+                  }
+                },
+                {
+                  "value": "20.0",
+                  "argumentInfo": {
+                    "argumentName": "y",
+                    "formattedValue": "20.0"
+                  }
+                },
+                {
+                  "value": "30.0",
+                  "argumentInfo": {
+                    "argumentName": "w",
+                    "formattedValue": "30.0"
+                  }
+                },
+                {
+                  "value": "40.0",
+                  "argumentInfo": {
+                    "argumentName": "h",
+                    "formattedValue": "40.0"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 27873000,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "a rectangle figure exists",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "a rectangle figure exists"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 21668625,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "matches requested bounds",
+              "words": [
+                {
+                  "value": "and",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "matches requested bounds"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 1067458,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 61153084
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 61153084
+    }
+  ],
+  "tagMap": {}
+}

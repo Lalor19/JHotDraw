@@ -1,0 +1,118 @@
+{
+  "className": "org.jhotdraw.samples.svg.figures.bddtest.RectangleCornersTest",
+  "name": "Rectangle Corners",
+  "scenarios": [
+    {
+      "className": "org.jhotdraw.samples.svg.figures.bddtest.RectangleCornersTest",
+      "testMethodName": "sharp_rectangle_changes_to_rounded",
+      "description": "sharp rectangle changes to rounded",
+      "tagIds": [],
+      "explicitParameters": [],
+      "derivedParameters": [],
+      "scenarioCases": [
+        {
+          "caseNr": 1,
+          "steps": [
+            {
+              "name": "a sharp rectangle exists",
+              "words": [
+                {
+                  "value": "Given",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "a sharp rectangle exists"
+                },
+                {
+                  "value": "10.0",
+                  "argumentInfo": {
+                    "argumentName": "x",
+                    "formattedValue": "10.0"
+                  }
+                },
+                {
+                  "value": "20.0",
+                  "argumentInfo": {
+                    "argumentName": "y",
+                    "formattedValue": "20.0"
+                  }
+                },
+                {
+                  "value": "30.0",
+                  "argumentInfo": {
+                    "argumentName": "w",
+                    "formattedValue": "30.0"
+                  }
+                },
+                {
+                  "value": "40.0",
+                  "argumentInfo": {
+                    "argumentName": "h",
+                    "formattedValue": "40.0"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 3086625,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "the corners are changed to",
+              "words": [
+                {
+                  "value": "When",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "the corners are changed to"
+                },
+                {
+                  "value": "10.0",
+                  "argumentInfo": {
+                    "argumentName": "archWidth",
+                    "formattedValue": "10.0"
+                  }
+                },
+                {
+                  "value": "10.0",
+                  "argumentInfo": {
+                    "argumentName": "archHeight",
+                    "formattedValue": "10.0"
+                  }
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 902375,
+              "depth": 0,
+              "parentFailed": false
+            },
+            {
+              "name": "rectangle is stroked with rounded corners",
+              "words": [
+                {
+                  "value": "Then",
+                  "isIntroWord": true
+                },
+                {
+                  "value": "rectangle is stroked with rounded corners"
+                }
+              ],
+              "status": "PASSED",
+              "durationInNanos": 21027458,
+              "depth": 0,
+              "parentFailed": false
+            }
+          ],
+          "explicitArguments": [],
+          "derivedArguments": [],
+          "status": "SUCCESS",
+          "durationInNanos": 30221959
+        }
+      ],
+      "casesAsTable": false,
+      "durationInNanos": 30221959
+    }
+  ],
+  "tagMap": {}
+}
