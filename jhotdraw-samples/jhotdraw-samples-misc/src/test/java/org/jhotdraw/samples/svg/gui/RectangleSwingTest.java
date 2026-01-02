@@ -4,6 +4,7 @@ import org.assertj.swing.core.MouseButton;
 import org.assertj.swing.edt.GuiActionRunner;
 import org.assertj.swing.fixture.FrameFixture;
 import org.assertj.swing.junit.testcase.AssertJSwingJUnitTestCase;
+import org.assertj.swing.timing.Pause;
 import org.jhotdraw.draw.*;
 import org.jhotdraw.draw.figure.CompositeFigure;
 import org.jhotdraw.draw.figure.Figure;
@@ -97,6 +98,8 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
         Point to = new Point(300, 350);
         drag(canvas, from, to);
 
+        Pause.pause(600);
+
         SVGRectFigure rectFigure = findFirstRect(view.getDrawing())
                 .orElseThrow(() -> new AssertionError("no rectangle figure"));
 
@@ -153,6 +156,8 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
         Point handleTarget = view.drawingToView(new Point2D.Double(bounds.x + 60, bounds.y + 60));
         drag(canvas, probe, handleTarget);
 
+        Pause.pause(600);
+
         // Rendering the curing rectangle
         GuiActionRunner.execute(() -> {
             view.revalidate();
@@ -170,8 +175,11 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
     private void drag(Component canvas, Point from, Point to) {
         window.robot().moveMouse(canvas, from);
         window.robot().pressMouse(MouseButton.LEFT_BUTTON);
+        Pause.pause(400);
         window.robot().moveMouse(canvas, to);
+        Pause.pause(400);
         window.robot().releaseMouse(MouseButton.LEFT_BUTTON);
+        Pause.pause(400);
         window.robot().waitForIdle();
     }
 
