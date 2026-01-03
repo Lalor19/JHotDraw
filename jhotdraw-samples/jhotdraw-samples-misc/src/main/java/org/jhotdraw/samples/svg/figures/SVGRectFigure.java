@@ -219,7 +219,7 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         if (cachedTransformedShape == null) {
             Shape shape = selectRectStrategy().transformShape(roundrect);
             if (get(TRANSFORM) != null) {
-                cachedTransformedShape = get(TRANSFORM).createTransformedShape(cachedTransformedShape);
+                cachedTransformedShape = get(TRANSFORM).createTransformedShape(shape);
             }
             cachedTransformedShape = shape;
         }
