@@ -1,4 +1,4 @@
-package org.jhotdraw.samples.svg.figures.bddtest.strokeandcorners;
+package org.jhotdraw.samples.svg.figures.bddtest.curverectangles;
 
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ExpectedScenarioState;
@@ -18,9 +18,6 @@ public class WhenCornerChanges extends Stage<WhenCornerChanges> {
 
 
     public WhenCornerChanges the_corners_are_changed_to(double archWidth, double archHeight) {
-        rectangle.arcwidth = 0;
-        rectangle.archeight = 0;
-
         rectangle.arcwidth = archWidth;
         rectangle.archeight = archHeight;
 

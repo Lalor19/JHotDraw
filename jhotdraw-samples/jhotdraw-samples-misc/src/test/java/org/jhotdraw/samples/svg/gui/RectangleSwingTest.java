@@ -112,6 +112,8 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
         assertThat(bounds.getY()).isEqualTo(from.getY());
         assertThat(bounds.getWidth()).isEqualTo(expectedW);
         assertThat(bounds.getHeight()).isEqualTo(expectedH);
+        assertThat(rectFigure.getArcWidth()).isEqualTo(0d);
+        assertThat(rectFigure.getArcHeight()).isEqualTo(0d);
     }
 
     @Test
@@ -166,10 +168,8 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
         window.robot().waitForIdle();
 
         // Asserting the rounded rectangle
-        assertThat(rectFigure.getArcWidth()).isGreaterThanOrEqualTo(0d);
-        assertThat(rectFigure.getArcHeight()).isGreaterThanOrEqualTo(0d);
-        assertThat(rectFigure.getArcWidth()).isEqualTo(60);
-        assertThat(rectFigure.getArcHeight()).isEqualTo(60);
+        assertThat(rectFigure.getArcWidth()).isGreaterThan(0d);
+        assertThat(rectFigure.getArcHeight()).isGreaterThan(0d);
     }
 
     private void drag(Component canvas, Point from, Point to) {

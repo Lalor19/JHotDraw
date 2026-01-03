@@ -10,7 +10,7 @@ public class GivenSVG extends Stage<GivenSVG> {
     @ProvidedScenarioState
     SVGFigureFactory factory;
 
-    public GivenSVG an_svg_figure_factory_is_available(){
+    public GivenSVG svg_figure_creation_is_available(){
         factory = new DefaultSVGFigureFactory();
         return this;
     }

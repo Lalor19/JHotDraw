@@ -1,4 +1,4 @@
-package org.jhotdraw.samples.svg.figures.bddtest.strokeandcorners;
+package org.jhotdraw.samples.svg.figures.bddtest.curverectangles;
 
 import com.tngtech.jgiven.Stage;
 import com.tngtech.jgiven.annotation.ProvidedScenarioState;
