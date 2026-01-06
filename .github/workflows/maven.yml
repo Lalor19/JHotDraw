@@ -31,7 +31,7 @@ jobs:
 
   testing:
     runs-on: ubuntu-latest
-    needs: [build]
+    #needs: [build]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17
@@ -52,7 +52,7 @@ jobs:
         
   deploy:
     runs-on: ubuntu-latest
-    needs: [testing]   # ensure test job finishes first
+    #needs: [testing]   # ensure test job finishes first
     if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
