@@ -11,8 +11,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -68,38 +66,10 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
     private ResourceBundleUtil labels;
     private Preferences prefs;
     private ContainerListener containerHandler;
+    private static final String TOOL_BAR_INDEX = "toolBarIndex.";
 
     public UndoRedoManager getUndoRedoManager() {
         return undoManager;
-    }
-
-    public void setUndoRedoManager(UndoRedoManager undo) {
-        if (undoManager != null && getView().getDrawing() != null) {
-            getView().getDrawing().removeUndoableEditListener(undoManager);
-        }
-        undoManager = undo;
-        if (undoManager != null && getView().getDrawing() != null) {
-            getView().getDrawing().addUndoableEditListener(undoManager);
-        }
-    }
-
-    private class ItemChangeHandler implements ItemListener {
-
-        private JToolBar toolbar;
-        private String prefkey;
-
-        public ItemChangeHandler(JToolBar toolbar, String prefkey) {
-            this.toolbar = toolbar;
-            this.prefkey = prefkey;
-        }
-
-        @Override
-        public void itemStateChanged(ItemEvent e) {
-            boolean b = e.getStateChange() == ItemEvent.SELECTED;
-            toolbar.setVisible(b);
-            prefs.putBoolean(prefkey, b);
-            validate();
-        }
     }
 
     /**
@@ -107,6 +77,7 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
      */
     public SVGDrawingPanel() {
         labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+
         try {
             prefs = PreferencesUtil.userNodeForPackage(getClass());
         } catch (SecurityException e) {
@@ -138,8 +109,8 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
         Collections.sort(sortme, new Comparator<JToolBar>() {
             @Override
             public int compare(JToolBar tb1, JToolBar tb2) {
-                int i1 = prefs.getInt("toolBarIndex." + tb1.getName(), 0);
-                int i2 = prefs.getInt("toolBarIndex." + tb2.getName(), 0);
+                int i1 = prefs.getInt(TOOL_BAR_INDEX + tb1.getName(), 0);
+                int i2 = prefs.getInt(TOOL_BAR_INDEX + tb2.getName(), 0);
                 return i1 - i2;
             }
         });
@@ -154,7 +125,7 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
                 for (Component c : toolsPane.getComponents()) {
                     if (c instanceof JToolBar) {
                         JToolBar tb = (JToolBar) c;
-                        prefs.putInt("toolBarIndex." + tb.getName(), i);
+                        prefs.putInt(TOOL_BAR_INDEX + tb.getName(), i);
                         i++;
                     }
                 }
@@ -274,38 +245,12 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
      */
     public void read(URI f) throws IOException {
         // Create a new drawing object
-        Drawing newDrawing = createDrawing();
-        if (newDrawing.getInputFormats().size() == 0) {
-            throw new InternalError("Drawing object has no input formats.");
-        }
+        Drawing newDrawing = createNewDrawing();
         // Try out all input formats until we succeed
         IOException firstIOException = null;
         for (InputFormat format : newDrawing.getInputFormats()) {
             try {
-                format.read(f, newDrawing);
-                final Drawing loadedDrawing = newDrawing;
-                Runnable r = new Runnable() {
-                    @Override
-                    public void run() {
-                        // Set the drawing on the Event Dispatcher Thread
-                        setDrawing(loadedDrawing);
-                    }
-                };
-                if (SwingUtilities.isEventDispatchThread()) {
-                    r.run();
-                } else {
-                    try {
-                        SwingUtilities.invokeAndWait(r);
-                    } catch (InterruptedException ex) {
-                        // suppress silently
-                    } catch (InvocationTargetException ex) {
-                        InternalError ie = new InternalError("Error setting drawing.");
-                        ie.initCause(ex);
-                        throw ie;
-                    }
-                }
-                // We get here if reading was successful.
-                // We can return since we are done.
+                tryReadwFormats(f, newDrawing, format);
                 return;
             } catch (IOException e) {
                 // We get here if reading failed.
@@ -333,32 +278,8 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
             return;
         }
         // Create a new drawing object
-        Drawing newDrawing = createDrawing();
-        if (newDrawing.getInputFormats().size() == 0) {
-            throw new InternalError("Drawing object has no input formats.");
-        }
-        format.read(f, newDrawing);
-        final Drawing loadedDrawing = newDrawing;
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                // Set the drawing on the Event Dispatcher Thread
-                setDrawing(loadedDrawing);
-            }
-        };
-        if (SwingUtilities.isEventDispatchThread()) {
-            r.run();
-        } else {
-            try {
-                SwingUtilities.invokeAndWait(r);
-            } catch (InterruptedException ex) {
-                // suppress silently
-            } catch (InvocationTargetException ex) {
-                InternalError ie = new InternalError("Error setting drawing.");
-                ie.initCause(ex);
-                throw ie;
-            }
-        }
+        Drawing newDrawing = createNewDrawing();
+        tryReadwFormats(f, newDrawing, format);
     }
 
     /**
@@ -392,7 +313,7 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
             }
         }
         Drawing saveDrawing = helper[0];
-        if (saveDrawing.getOutputFormats().size() == 0) {
+        if (saveDrawing.getOutputFormats().isEmpty()) {
             throw new InternalError("Drawing object has no output formats.");
         }
         // Try out all output formats until we find one which accepts the
@@ -449,6 +370,38 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
         format.write(f, saveDrawing);
     }
 
+    private Drawing createNewDrawing()  {
+        Drawing newDrawing = createDrawing();
+        if (newDrawing.getInputFormats().isEmpty()) {
+            throw new InternalError("Drawing object has no input formats.");
+        }
+        return newDrawing;
+    }
+
+    private void tryReadwFormats(URI f, Drawing newDrawing, InputFormat format) throws IOException {
+        format.read(f, newDrawing);
+        final Drawing loadedDrawing = newDrawing;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                // Set the drawing on the Event Dispatcher Thread
+                setDrawing(loadedDrawing);
+            }
+        };
+        if (SwingUtilities.isEventDispatchThread()) {
+            r.run();
+        } else {
+            try {
+                SwingUtilities.invokeAndWait(r);
+            } catch (InterruptedException ex) {
+                // suppress silently
+            } catch (InvocationTargetException ex) {
+                InternalError ie = new InternalError("Error setting drawing.");
+                ie.initCause(ex);
+                throw ie;
+            }
+        }
+    }
     /**
      * Sets the actions for the "Action" popup menu in the toolbar.
      * <p>
