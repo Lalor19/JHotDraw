@@ -42,12 +42,15 @@ import org.jhotdraw.util.*;
 public class CanvasToolBar extends AbstractToolBar {
 
     private static final long serialVersionUID = 1L;
+    private static final String WIDTH_TOOL_TIP_TEXT = "attribute.canvasWidth.toolTipText";
+    private static final String HEIGHT_TOOL_TIP_TEXT = "attribute.canvasHeight.toolTipText";
+    private static final String SVG_LABELS = "org.jhotdraw.samples.svg.Labels";
 
     /**
      * Creates new instance.
      */
     public CanvasToolBar() {
-        ResourceBundleUtil labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+        ResourceBundleUtil labels = ResourceBundleUtil.getBundle(SVG_LABELS);
         setName(labels.getString(getID() + ".toolbar"));
         setDisclosureStateCount(3);
     }
@@ -75,7 +78,7 @@ public class CanvasToolBar extends AbstractToolBar {
             if (editor == null) {
                 return p;
             }
-            labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+            labels = ResourceBundleUtil.getBundle(SVG_LABELS);
             layout = new GridBagLayout();
             p.setLayout(layout);
             // Fill color
@@ -116,7 +119,7 @@ public class CanvasToolBar extends AbstractToolBar {
             heightField = new JAttributeTextField<Double>();
             widthLabel.setUI((LabelUI) PaletteLabelUI.createUI(widthLabel));
             widthLabel.setLabelFor(widthField);
-            widthLabel.setToolTipText(labels.getString("attribute.canvasWidth.toolTipText"));
+            widthLabel.setToolTipText(labels.getString(WIDTH_TOOL_TIP_TEXT));
             widthLabel.setText(labels.getString("attribute.canvasWidth.text")); // NOI18N
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
@@ -127,7 +130,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p.add(widthLabel, gbc);
             widthField.setUI((TextUI) PaletteFormattedTextFieldUI.createUI(widthField));
             widthField.setColumns(3);
-            widthField.setToolTipText(labels.getString("attribute.canvasWidth.toolTipText"));
+            widthField.setToolTipText(labels.getString(WIDTH_TOOL_TIP_TEXT));
             formatter = new JavaNumberFormatter(1d, 4096d, 1d, true);
             formatter.setUsesScientificNotation(false);
             widthField.setFormatterFactory(new DefaultFormatterFactory(formatter));
@@ -143,7 +146,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p.add(widthField, gbc);
             heightLabel.setUI((LabelUI) PaletteLabelUI.createUI(heightLabel));
             heightLabel.setLabelFor(widthField);
-            heightLabel.setToolTipText(labels.getString("attribute.canvasHeight.toolTipText"));
+            heightLabel.setToolTipText(labels.getString(HEIGHT_TOOL_TIP_TEXT));
             heightLabel.setText(labels.getString("attribute.canvasHeight.text")); // NOI18N
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
@@ -154,7 +157,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p.add(heightLabel, gbc);
             heightField.setUI((TextUI) PaletteFormattedTextFieldUI.createUI(widthField));
             heightField.setColumns(3);
-            heightField.setToolTipText(labels.getString("attribute.canvasHeight.toolTipText"));
+            heightField.setToolTipText(labels.getString(HEIGHT_TOOL_TIP_TEXT));
             formatter = new JavaNumberFormatter(1d, 4096d, 1d, true);
             formatter.setUsesScientificNotation(false);
             heightField.setFormatterFactory(new DefaultFormatterFactory(formatter));
@@ -183,7 +186,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p3.setOpaque(false);
             p.removeAll();
             p.setBorder(new EmptyBorder(5, 5, 5, 8));
-            labels = ResourceBundleUtil.getBundle("org.jhotdraw.samples.svg.Labels");
+            labels = ResourceBundleUtil.getBundle(SVG_LABELS);
             layout = new GridBagLayout();
             p.setLayout(layout);
             // Fill color field with button
@@ -253,7 +256,7 @@ public class CanvasToolBar extends AbstractToolBar {
             heightField = new JAttributeTextField<Double>();
             widthLabel.setUI((LabelUI) PaletteLabelUI.createUI(widthLabel));
             widthLabel.setLabelFor(widthField);
-            widthLabel.setToolTipText(labels.getString("attribute.canvasWidth.toolTipText"));
+            widthLabel.setToolTipText(labels.getString(WIDTH_TOOL_TIP_TEXT));
             widthLabel.setText(labels.getString("attribute.canvasWidth.text")); // NOI18N
             gbc = new GridBagConstraints();
             gbc.gridx = 0;
@@ -264,7 +267,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p3.add(widthLabel, gbc);
             widthField.setUI((TextUI) PaletteFormattedTextFieldUI.createUI(widthField));
             widthField.setColumns(3);
-            widthField.setToolTipText(labels.getString("attribute.canvasWidth.toolTipText"));
+            widthField.setToolTipText(labels.getString(WIDTH_TOOL_TIP_TEXT));
             widthField.setFormatterFactory(JavaNumberFormatter.createFormatterFactory(1d, 4096d, 1d, true));
             widthField.setHorizontalAlignment(JTextField.LEADING);
             disposables.add(new DrawingAttributeEditorHandler<Double>(CANVAS_WIDTH, widthField, editor));
@@ -278,7 +281,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p3.add(widthField, gbc);
             heightLabel.setUI((LabelUI) PaletteLabelUI.createUI(heightLabel));
             heightLabel.setLabelFor(widthField);
-            heightLabel.setToolTipText(labels.getString("attribute.canvasHeight.toolTipText"));
+            heightLabel.setToolTipText(labels.getString(HEIGHT_TOOL_TIP_TEXT));
             heightLabel.setText(labels.getString("attribute.canvasHeight.text")); // NOI18N
             gbc = new GridBagConstraints();
             gbc.gridx = 3;
@@ -289,7 +292,7 @@ public class CanvasToolBar extends AbstractToolBar {
             p3.add(heightLabel, gbc);
             heightField.setUI((TextUI) PaletteFormattedTextFieldUI.createUI(widthField));
             heightField.setColumns(3);
-            heightField.setToolTipText(labels.getString("attribute.canvasHeight.toolTipText"));
+            heightField.setToolTipText(labels.getString(HEIGHT_TOOL_TIP_TEXT));
             heightField.setFormatterFactory(JavaNumberFormatter.createFormatterFactory(1d, 4096d, 1d, true));
             heightField.setHorizontalAlignment(JTextField.LEADING);
             disposables.add(new DrawingAttributeEditorHandler<Double>(CANVAS_HEIGHT, heightField, editor));
