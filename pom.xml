@@ -8,9 +8,16 @@
 	<organization>
 		<name>JHotDraw</name>
 	</organization>
-	<repositories>
+	<distributionManagement>
 		<repository>
 			<id>github</id>
+			<name>GitHub Lalor19 Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/Lalor19/JHotDraw</url>
+		</repository>
+	</distributionManagement>
+	<repositories>
+		<repository>
+			<id>github-sweat-tek</id>
 			<name>GitHub external Packages</name>
 			<url>https://maven.pkg.github.com/sweat-tek/MavenRepository</url>
 		</repository>

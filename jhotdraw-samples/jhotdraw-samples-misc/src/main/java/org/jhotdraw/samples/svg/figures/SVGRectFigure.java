@@ -10,6 +10,8 @@ package org.jhotdraw.samples.svg.figures;
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
+
+import org.apache.bcel.generic.ARETURN;
 import org.jhotdraw.draw.*;
 import static org.jhotdraw.draw.AttributeKeys.FILL_COLOR;
 import static org.jhotdraw.draw.AttributeKeys.STROKE_CAP;
@@ -69,12 +71,28 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
      */
     private transient Shape cachedHitShape;
 
+    public record Rect(double x, double y, double width, double height){}
+    public record RoundRect(double rx, double ry){}
+
     /**
      * Creates a new instance.
      */
     public SVGRectFigure() {
         this(0, 0, 0, 0);
     }
+
+    public SVGRectFigure(Rect rect){
+        this(rect, new RoundRect(0, 0));
+    }
+
+    public SVGRectFigure(Rect rect, RoundRect rRect) {
+        roundrect = new RoundRectangle2D.Double(rect.x(), rect.y(), rect.width(), rect.height(), rRect.rx(), rRect.ry());
+        SVGAttributeKeys.setDefaults(this);
+        setConnectable(false);
+    }
+
+
+
 
     public SVGRectFigure(double x, double y, double width, double height) {
         this(x, y, width, height, 0, 0);
@@ -85,6 +103,8 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
         SVGAttributeKeys.setDefaults(this);
         setConnectable(false);
     }
+
+
 
     // DRAWING
     @Override
@@ -272,34 +292,43 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     public void transform(AffineTransform tx) {
         invalidateTransformedShape();
-        if (get(TRANSFORM) != null
-                || //              (tx.getType() & (AffineTransform.TYPE_TRANSLATION | AffineTransform.TYPE_MASK_SCALE)) != tx.getType()) {
-                (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
-            if (get(TRANSFORM) == null) {
-                set(TRANSFORM, (AffineTransform) tx.clone());
-            } else {
-                AffineTransform t = TRANSFORM.getClone(this);
-                t.preConcatenate(tx);
-                set(TRANSFORM, t);
-            }
+
+        if (get(TRANSFORM) != null || (tx.getType() & (AffineTransform.TYPE_TRANSLATION)) != tx.getType()) {
+            gatheredTransforms(tx);
+            return;
+        }
+        translationFillStroke(tx);
+    }
+
+    private void gatheredTransforms(AffineTransform tx) {
+        AffineTransform current = TRANSFORM.getClone(this);
+        if (current == null) {
+            set(TRANSFORM, new AffineTransform(tx));
         } else {
-            Point2D.Double anchor = getStartPoint();
-            Point2D.Double lead = getEndPoint();
-            setBounds(
-                    (Point2D.Double) tx.transform(anchor, anchor),
-                    (Point2D.Double) tx.transform(lead, lead));
-            if (get(FILL_GRADIENT) != null
-                    && !get(FILL_GRADIENT).isRelativeToFigureBounds()) {
-                Gradient g = FILL_GRADIENT.getClone(this);
-                g.transform(tx);
-                set(FILL_GRADIENT, g);
-            }
-            if (get(STROKE_GRADIENT) != null
-                    && !get(STROKE_GRADIENT).isRelativeToFigureBounds()) {
-                Gradient g = STROKE_GRADIENT.getClone(this);
-                g.transform(tx);
-                set(STROKE_GRADIENT, g);
-            }
+            current.preConcatenate(tx);
+            set(TRANSFORM, current);
+        }
+    }
+
+    private void translationFillStroke(AffineTransform tx) {
+        Point2D.Double anchor = getStartPoint();
+        Point2D.Double lead = getEndPoint();
+        setBounds(
+                (Point2D.Double) tx.transform(anchor, anchor),
+                (Point2D.Double) tx.transform(lead, lead));
+
+        Gradient fillGradient = get(FILL_GRADIENT);
+        if (fillGradient != null && !fillGradient.isRelativeToFigureBounds()) {
+            Gradient gClone = FILL_GRADIENT.getClone(this);
+            gClone.transform(tx);
+            set(FILL_GRADIENT, gClone);
+        }
+
+        Gradient strokeGradient = get(STROKE_GRADIENT);
+        if(strokeGradient != null && !strokeGradient.isRelativeToFigureBounds()) {
+            Gradient clone = STROKE_GRADIENT.getClone(this);
+            strokeGradient.transform(tx);
+            set(STROKE_GRADIENT, clone);
         }
     }
 
@@ -316,10 +345,10 @@ public class SVGRectFigure extends SVGAttributedFigure implements SVGFigure {
     @Override
     public Object getTransformRestoreData() {
         return new Object[]{
-            roundrect.clone(),
-            TRANSFORM.getClone(this),
-            FILL_GRADIENT.getClone(this),
-            STROKE_GRADIENT.getClone(this)};
+                roundrect.clone(),
+                TRANSFORM.getClone(this),
+                FILL_GRADIENT.getClone(this),
+                STROKE_GRADIENT.getClone(this)};
     }
 
     // EDITING
