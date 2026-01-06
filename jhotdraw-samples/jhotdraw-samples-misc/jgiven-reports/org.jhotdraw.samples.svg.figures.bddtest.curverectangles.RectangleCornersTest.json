@@ -53,7 +53,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 3725459,
+              "durationInNanos": 3325083,
               "depth": 0,
               "parentFailed": false
             },
@@ -83,7 +83,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 1404709,
+              "durationInNanos": 1015125,
               "depth": 0,
               "parentFailed": false
             },
@@ -99,7 +99,7 @@
                 }
               ],
               "status": "PASSED",
-              "durationInNanos": 26108750,
+              "durationInNanos": 20458959,
               "depth": 0,
               "parentFailed": false
             }
@@ -107,11 +107,11 @@
           "explicitArguments": [],
           "derivedArguments": [],
           "status": "SUCCESS",
-          "durationInNanos": 38080292
+          "durationInNanos": 29986500
         }
       ],
       "casesAsTable": false,
-      "durationInNanos": 38080292
+      "durationInNanos": 29986500
     }
   ],
   "tagMap": {}
