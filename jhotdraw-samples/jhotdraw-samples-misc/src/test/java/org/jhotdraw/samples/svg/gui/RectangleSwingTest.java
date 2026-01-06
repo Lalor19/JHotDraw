@@ -14,6 +14,8 @@ import org.jhotdraw.draw.tool.SelectionTool;
 import org.jhotdraw.samples.svg.figures.SVGAttributedFigure;
 import org.jhotdraw.samples.svg.figures.SVGRectFigure;
 import org.jhotdraw.samples.svg.figures.SVGRectRadiusHandle;
+import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import javax.swing.*;
@@ -32,6 +34,12 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
 
     private CreationTool rectangleTool;
     private SelectionTool selectionTool;
+
+    @BeforeClass
+    public static void skipInCI() {
+        Assume.assumeTrue("Skipping Swing tests in CI (no display)",
+                System.getenv("CI") == null);
+    }
 
     @Override
     protected void onSetUp() throws Exception {
