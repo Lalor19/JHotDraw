@@ -46,6 +46,8 @@ public class CanvasToolBar extends AbstractToolBar {
     private static final String HEIGHT_TOOL_TIP_TEXT = "attribute.canvasHeight.toolTipText";
     private static final String SVG_LABELS = "org.jhotdraw.samples.svg.Labels";
 
+    //The wrong icon was used, which caused errors when running the application :) - so it's simply replaced
+    private static final String CANVAS_FILL_OPACITY_ICON = "attribute.fillOpacity.largeIcon";
     /**
      * Creates new instance.
      */
@@ -103,7 +105,7 @@ public class CanvasToolBar extends AbstractToolBar {
             labels.configureToolBarButton(opacityPopupButton, "attribute.canvasFillOpacity");
             opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
             opacityPopupButton.setIcon(
-                    new DrawingOpacityIcon(editor, CANVAS_FILL_OPACITY, CANVAS_FILL_COLOR, null, Images.createImage(getClass(), labels.getString("attribute.canvasFillOpacity.icon")),
+                    new DrawingOpacityIcon(editor, CANVAS_FILL_OPACITY, CANVAS_FILL_COLOR, null, Images.createImage(getClass(), labels.getString(CANVAS_FILL_OPACITY_ICON)),
                             new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
             disposables.add(new DrawingComponentRepainter(editor, opacityPopupButton));
             gbc = new GridBagConstraints();
@@ -240,7 +242,7 @@ public class CanvasToolBar extends AbstractToolBar {
             labels.configureToolBarButton(opacityPopupButton, "attribute.canvasFillOpacity");
             opacityPopupButton.setUI((PaletteButtonUI) PaletteButtonUI.createUI(opacityPopupButton));
             opacityPopupButton.setIcon(
-                    new DrawingOpacityIcon(editor, CANVAS_FILL_OPACITY, CANVAS_FILL_COLOR, null, Images.createImage(getClass(), labels.getString("attribute.canvasFillOpacity.icon")),
+                    new DrawingOpacityIcon(editor, CANVAS_FILL_OPACITY, CANVAS_FILL_COLOR, null, Images.createImage(getClass(), labels.getString(CANVAS_FILL_OPACITY_ICON)),
                             new Rectangle(5, 5, 6, 6), new Rectangle(4, 4, 7, 7)));
             disposables.add(new DrawingComponentRepainter(editor, opacityPopupButton));
             gbc = new GridBagConstraints();
