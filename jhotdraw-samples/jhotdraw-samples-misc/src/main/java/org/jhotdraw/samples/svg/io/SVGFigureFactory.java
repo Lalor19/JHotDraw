@@ -32,7 +32,7 @@ import org.jhotdraw.samples.svg.Gradient;
 public interface SVGFigureFactory {
 
     public Figure createRect(
-            double x, double y, double width, double height, double rx, double ry,
+            double x, double y, double width, double height,
             Map<AttributeKey<?>, Object> attributes);
 
     public Figure createCircle(

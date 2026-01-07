@@ -38,6 +38,10 @@ public abstract class SVGAttributedFigure extends AbstractAttributedFigure {
     public SVGAttributedFigure() {
     }
 
+    public static SVGAttributedFigure createRectFactory() {
+        return new SVGRectFigure();
+    }
+
     @Override
     public void draw(Graphics2D g) {
         double opacity = get(OPACITY);

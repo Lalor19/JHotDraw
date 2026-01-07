@@ -15,13 +15,13 @@
 			<url>https://maven.pkg.github.com/Lalor19/JHotDraw</url>
 		</repository>
 	</distributionManagement>
-	<repositories>
-		<repository>
-			<id>github-sweat-tek</id>
-			<name>GitHub external Packages</name>
-			<url>https://maven.pkg.github.com/sweat-tek/MavenRepository</url>
-		</repository>
-	</repositories>
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>github-sweat-tek</id>-->
+<!--			<name>GitHub external Packages</name>-->
+<!--			<url>https://maven.pkg.github.com/sweat-tek/MavenRepository</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
 	<licenses>
 		<license>
 			<name>GNU Library or Lesser General Public License (LGPL) V2.1</name>
