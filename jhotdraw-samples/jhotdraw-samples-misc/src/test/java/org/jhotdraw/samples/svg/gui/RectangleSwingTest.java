@@ -37,8 +37,7 @@ public class RectangleSwingTest extends AssertJSwingJUnitTestCase {
 
     @BeforeClass
     public static void skipInCI() {
-        Assume.assumeTrue("Skipping Swing tests in CI (no display)",
-                System.getenv("CI") == null);
+        Assume.assumeTrue("Skipping swing test in CI (no display)", System.getenv("CI")==null);
     }
 
     @Override
