@@ -34,27 +34,9 @@ public class SelectionOpacityIcon extends javax.swing.ImageIcon {
      *
      * @param editor The drawing editor.
      * @param opacityKey The opacityKey of the default attribute
-     * @param imageLocation the icon image
      * @param fillShape The shape to be drawn with the fillColor of the default
      * attribute.
      */
-    public SelectionOpacityIcon(
-            DrawingEditor editor,
-            AttributeKey<Double> opacityKey,
-            AttributeKey<Color> fillColorKey,
-            AttributeKey<Color> strokeColorKey,
-            URL imageLocation,
-            Shape fillShape,
-            Shape strokeShape) {
-        super(imageLocation);
-        this.editor = editor;
-        this.opacityKey = opacityKey;
-        this.fillColorKey = fillColorKey;
-        this.strokeColorKey = strokeColorKey;
-        this.fillShape = fillShape;
-        this.strokeShape = strokeShape;
-    }
-
     public SelectionOpacityIcon(
             DrawingEditor editor,
             AttributeKey<Double> opacityKey,
