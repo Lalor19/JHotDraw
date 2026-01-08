@@ -42,6 +42,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>5.8.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.tngtech.jgiven</groupId>
             <artifactId>jgiven-junit</artifactId>
             <version>1.2.5</version>
@@ -90,6 +96,7 @@
                         --add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED
                         --add-opens=java.desktop/com.apple.eio=ALL-UNNAMED
                         --add-opens=java.base/java.util=ALL-UNNAMED
+                        --add-opens=java.base/java.lang=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
