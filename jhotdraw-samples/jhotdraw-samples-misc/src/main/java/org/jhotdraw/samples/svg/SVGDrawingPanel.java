@@ -84,6 +84,7 @@ public class SVGDrawingPanel extends JPanel implements Disposable {
             // prefs is null, because we are not permitted to read preferences
         }
         initComponents();
+        view.setName("drawingView");
         toolsPane.setLayout(new ToolBarLayout());
         toolsPane.setBackground(new Color(0xf0f0f0));
         toolsPane.setOpaque(true);
