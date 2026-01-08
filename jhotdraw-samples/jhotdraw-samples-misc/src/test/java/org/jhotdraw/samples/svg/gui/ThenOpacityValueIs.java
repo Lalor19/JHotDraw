@@ -1,14 +1,14 @@
 package org.jhotdraw.samples.svg.gui;
 
 import com.tngtech.jgiven.Stage;
-import com.tngtech.jgiven.annotation.ProvidedScenarioState;
-import org.jhotdraw.draw.gui.JAttributeSlider;
+import com.tngtech.jgiven.annotation.ExpectedScenarioState;
+
 
 import static org.junit.Assert.*;
 
 public class ThenOpacityValueIs extends Stage<ThenOpacityValueIs> {
 
-    @ProvidedScenarioState
+    @ExpectedScenarioState
     OpacitySliderState opacitySliderState;
 
     //THEN the opacity value should be 50

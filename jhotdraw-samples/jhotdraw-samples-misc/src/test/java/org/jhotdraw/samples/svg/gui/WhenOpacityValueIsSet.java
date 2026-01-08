@@ -1,12 +1,11 @@
 package org.jhotdraw.samples.svg.gui;
 
 import com.tngtech.jgiven.Stage;
-import com.tngtech.jgiven.annotation.ProvidedScenarioState;
-import org.jhotdraw.draw.gui.JAttributeSlider;
+import com.tngtech.jgiven.annotation.ExpectedScenarioState;
 
 public class WhenOpacityValueIsSet extends Stage<WhenOpacityValueIsSet> {
 
-    @ProvidedScenarioState
+    @ExpectedScenarioState
     OpacitySliderState opacitySliderState;
 
     //WHEN I set the value to 50
