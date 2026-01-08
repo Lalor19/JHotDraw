@@ -96,6 +96,7 @@
                         --add-opens=java.desktop/com.apple.eawt=ALL-UNNAMED
                         --add-opens=java.desktop/com.apple.eio=ALL-UNNAMED
                         --add-opens=java.base/java.util=ALL-UNNAMED
+                        --add-opens=java.base/java.lang=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
