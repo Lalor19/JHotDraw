@@ -225,61 +225,90 @@ public class CreationTool extends AbstractTool {
 
     @Override
     public void mouseReleased(MouseEvent evt) {
-        if (createdFigure != null) {
-            Rectangle2D.Double bounds = createdFigure.getBounds();
-            if (bounds.width == 0 && bounds.height == 0) {
-                getDrawing().remove(createdFigure);
-                if (isToolDoneAfterCreation()) {
-                    fireToolDone();
-                }
-            } else {
-                if (Math.abs(anchor.x - evt.getX()) < minimalSizeTreshold.width
-                        && Math.abs(anchor.y - evt.getY()) < minimalSizeTreshold.height) {
-                    createdFigure.willChange();
-                    createdFigure.setBounds(
-                            constrainPoint(new Point(anchor.x, anchor.y), createdFigure),
-                            constrainPoint(new Point(
+        if (createdFigure == null) {
+            finishToolIfNeeded();
+            return;
+        }
+
+        Rectangle2D.Double bounds = createdFigure.getBounds();
+        if (isZeroSized(bounds)) {
+            removeCreatedFigureAndFinishToolIfNeeded();
+            return;
+        }
+
+        enforceMinimalSizeIfNeeded(evt, bounds);
+        layoutIfComposite(createdFigure);
+        postUndoableCreation(createdFigure, getDrawing());
+        invalidateCreationBounds(evt);
+
+        creationFinished(createdFigure);
+        createdFigure = null;
+    }
+
+    private boolean isZeroSized(Rectangle2D.Double bounds) {
+        return bounds.width == 0 && bounds.height == 0;
+    }
+
+    private void finishToolIfNeeded() {
+        if (isToolDoneAfterCreation()) {
+            fireToolDone();
+        }
+    }
+
+    private void removeCreatedFigureAndFinishToolIfNeeded() {
+        getDrawing().remove(createdFigure);
+        finishToolIfNeeded();
+    }
+
+    private void enforceMinimalSizeIfNeeded(MouseEvent evt, Rectangle2D.Double bounds) {
+        if (Math.abs(anchor.x - evt.getX()) < minimalSizeTreshold.width
+                && Math.abs(anchor.y - evt.getY()) < minimalSizeTreshold.height) {
+
+            createdFigure.willChange();
+            createdFigure.setBounds(
+                    constrainPoint(new Point(anchor.x, anchor.y), createdFigure),
+                    constrainPoint(new Point(
                                     anchor.x + (int) Math.max(bounds.width, minimalSize.width),
                                     anchor.y + (int) Math.max(bounds.height, minimalSize.height)),
-                                    createdFigure));
-                    createdFigure.changed();
-                }
-                if (createdFigure instanceof CompositeFigure) {
-                    ((CompositeFigure) createdFigure).layout();
-                }
-                final Figure addedFigure = createdFigure;
-                final Drawing addedDrawing = getDrawing();
-                getDrawing().fireUndoableEditHappened(new AbstractUndoableEdit() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public String getPresentationName() {
-                        return presentationName;
-                    }
-
-                    @Override
-                    public void undo() throws CannotUndoException {
-                        super.undo();
-                        addedDrawing.remove(addedFigure);
-                    }
-
-                    @Override
-                    public void redo() throws CannotRedoException {
-                        super.redo();
-                        addedDrawing.add(addedFigure);
-                    }
-                });
-                Rectangle r = new Rectangle(anchor.x, anchor.y, 0, 0);
-                r.add(evt.getX(), evt.getY());
-                maybeFireBoundsInvalidated(r);
-                creationFinished(createdFigure);
-                createdFigure = null;
-            }
-        } else {
-            if (isToolDoneAfterCreation()) {
-                fireToolDone();
-            }
+                            createdFigure)
+            );
+            createdFigure.changed();
         }
+    }
+
+    private void layoutIfComposite(Figure f) {
+        if (f instanceof CompositeFigure) {
+            ((CompositeFigure) f).layout();
+        }
+    }
+
+    private void postUndoableCreation(final Figure addedFigure, final Drawing addedDrawing) {
+        addedDrawing.fireUndoableEditHappened(new AbstractUndoableEdit() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String getPresentationName() {
+                return presentationName;
+            }
+
+            @Override
+            public void undo() throws CannotUndoException {
+                super.undo();
+                addedDrawing.remove(addedFigure);
+            }
+
+            @Override
+            public void redo() throws CannotRedoException {
+                super.redo();
+                addedDrawing.add(addedFigure);
+            }
+        });
+    }
+
+    private void invalidateCreationBounds(MouseEvent evt) {
+        Rectangle r = new Rectangle(anchor.x, anchor.y, 0, 0);
+        r.add(evt.getX(), evt.getY());
+        maybeFireBoundsInvalidated(r);
     }
 
     @SuppressWarnings("unchecked")
