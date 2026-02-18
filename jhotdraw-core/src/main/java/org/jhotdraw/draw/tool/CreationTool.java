@@ -204,13 +204,23 @@ public class CreationTool extends AbstractTool {
     @Override
     public void mouseDragged(MouseEvent evt) {
         if (createdFigure != null) {
-            Point2D.Double p = constrainPoint(new Point(evt.getX(), evt.getY()), createdFigure);
-            createdFigure.willChange();
-            createdFigure.setBounds(
-                    constrainPoint(new Point(anchor.x, anchor.y), createdFigure),
-                    p);
-            createdFigure.changed();
+            updateCreatedFigureDuringDrag(evt);
+            repaintView();
         }
+    }
+
+    protected void updateCreatedFigureDuringDrag(MouseEvent evt) {
+        Point2D.Double p = constrainPoint(new Point(evt.getX(), evt.getY()), createdFigure);
+        createdFigure.willChange();
+        createdFigure.setBounds(
+                constrainPoint(new Point(anchor.x, anchor.y), createdFigure),
+                p
+        );
+        createdFigure.changed();
+    }
+
+    protected void repaintView() {
+        getView().getComponent().repaint();
     }
 
     @Override
